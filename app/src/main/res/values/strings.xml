@@ -9,6 +9,7 @@
     <string name="credential_not_custom">Kredensial bukan CustomCredential!</string>
     <string name="authentication_failed">Autentikasi gagal.</string>
     <string name="welcome_message">Selamat datang, %s!</string>
+    <string name="app_logo_desc">App Logo</string>
     <string name="default_user_name">Pengguna</string>
     <string name="login_failed">Login gagal, coba lagi.</string>
     <string name="privacy_policy_text">Kebijakan Privasi</string>

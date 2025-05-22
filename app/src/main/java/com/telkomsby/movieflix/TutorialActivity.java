@@ -48,11 +48,14 @@ public class TutorialActivity extends AppCompatActivity {
                 setCurrentIndicator(position);
                 if (position == items.size() - 1) {
                     buttonNext.setText("Get Started");
+                    textSkip.setVisibility(View.GONE);
                 } else {
                     buttonNext.setText("Next");
+                    textSkip.setVisibility(View.VISIBLE);
                 }
             }
         });
+
 
         textSkip.setOnClickListener(v -> {
             goToLogin();

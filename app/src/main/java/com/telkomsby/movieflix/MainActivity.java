@@ -1,48 +1,49 @@
 package com.telkomsby.movieflix;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.telkomsby.movieflix.ui.home.BookmarkFragment;
+import com.telkomsby.movieflix.ui.home.HomeFragment;
+import com.telkomsby.movieflix.ui.home.ProfileFragment;
+import com.telkomsby.movieflix.ui.home.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
 
-        TextView welcomeText = findViewById(R.id.mainWelcomeText);
-        Button logoutButton = findViewById(R.id.mainLogoutButton);
+            if (item.getItemId() == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
+            } else if (item.getItemId() == R.id.nav_bookmark) {
+                selectedFragment = new BookmarkFragment();
+            } else if (item.getItemId() == R.id.nav_search) {
+                selectedFragment = new SearchFragment();
+            } else if (item.getItemId() == R.id.nav_profile) {
+                selectedFragment = new ProfileFragment();
+            }
 
-        if (currentUser != null) {
-            String userName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : currentUser.getEmail();
-            welcomeText.setText(getString(R.string.welcome_message, userName));
-        } else {
-            Toast.makeText(this, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show();
-            navigateToLogin();
-        }
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
+            }
 
-        logoutButton.setOnClickListener(v -> {
-            firebaseAuth.signOut();
-            navigateToLogin();
+            return true;
         });
-    }
 
-    private void navigateToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        // Default fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new HomeFragment())
+                .commit();
     }
 }

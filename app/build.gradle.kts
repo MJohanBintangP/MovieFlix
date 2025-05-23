@@ -47,4 +47,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation ("com.google.firebase:firebase-auth:22.2.0")
+    implementation ("com.google.firebase:firebase-firestore:24.10.0")
+    implementation ("androidx.activity:activity-ktx:1.7.0")
+    implementation ("com.squareup.picasso:picasso:2.8")
 }

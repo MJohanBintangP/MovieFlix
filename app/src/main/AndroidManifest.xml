@@ -34,6 +34,14 @@
             android:exported="true"/>
 
         <activity
+            android:name=".AdminActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="true"/>
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"/>
 

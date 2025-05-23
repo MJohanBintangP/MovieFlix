@@ -27,8 +27,12 @@ import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -162,29 +166,67 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveUserInfoToFirestore(FirebaseUser user) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userId = user.getUid();
-
-        Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("userId", userId);
-        userInfo.put("name", user.getDisplayName() != null ? user.getDisplayName() : "");
-        userInfo.put("email", user.getEmail() != null ? user.getEmail() : "");
-        if (user.getPhotoUrl() != null) {
-            userInfo.put("photoUrl", user.getPhotoUrl().toString());
-        }
-
-        db.collection("users")
-                .document(userId)
-                .set(userInfo)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "User info successfully written to Firestore for UID: " + userId))
-                .addOnFailureListener(e -> Log.e(TAG, "Error writing user info to Firestore for UID: " + userId, e));
-    }
-
     private void navigateToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, PaymentActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
+
+    private void saveUserInfoToFirestore(FirebaseUser user) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userId = user.getUid();
+
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    String role = documentSnapshot.getString("role");
+                    if (role == null || role.isEmpty()) {
+                        Map<String, Object> userInfo = new HashMap<>();
+                        userInfo.put("userId", userId);
+                        userInfo.put("name", user.getDisplayName() != null ? user.getDisplayName() : "");
+                        userInfo.put("email", user.getEmail() != null ? user.getEmail() : "");
+                        if (user.getPhotoUrl() != null) {
+                            userInfo.put("photoUrl", user.getPhotoUrl().toString());
+                        }
+                        userInfo.put("role", "user");
+
+                        db.collection("users").document(userId).set(userInfo)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "User info with role saved to Firestore for UID: " + userId);
+                                    navigateToNextActivity(userId, "user");
+                                });
+                    } else {
+                        Log.d(TAG, "User already has a role: " + role);
+                        navigateToNextActivity(userId, role);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching user role from Firestore", e);
+                    Toast.makeText(this, "Gagal memuat informasi akun", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void navigateToNextActivity(String userId, String role) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("users").document(userId);
+
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Boolean isSubscribed = documentSnapshot.getBoolean("isSubscribed");
+                Date expiryDate = documentSnapshot.getDate("subscriptionExpiry");
+
+                boolean hasActiveSubscription = isSubscribed != null && isSubscribed && expiryDate != null && !expiryDate.before(new Date());
+
+                if ("admin".equals(role)) {
+                    startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                } else if (hasActiveSubscription) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+                    startActivity(new Intent(LoginActivity.this, PaymentActivity.class));
+                }
+                finish();
+            }
+        });
+    }
+
 }

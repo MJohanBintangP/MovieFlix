@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Halaman Pencarian"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <EditText
-        android:id="@+id/editTextSearch"
+        android:id="@+id/search_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="Cari film..."
-        android:layout_marginTop="16dp"
-        android:padding="10dp"/>
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:background="#EEEEEE"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="8dp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

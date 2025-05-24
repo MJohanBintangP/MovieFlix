@@ -1,31 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/poster"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/poster" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/poster_image"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Poster Film" />
+
+        <!-- Tombol Bookmark -->
+        <ImageView
+            android:id="@+id/bookmark_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end|top"
+            android:src="@drawable/ic_bookmark"
+            android:padding="8dp"
+            android:contentDescription="Bookmark Button" />
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Judul Film"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="4dp"/>
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"/>
 
     <TextView
-        android:id="@+id/rating"
-        android:layout_width="match_parent"
+        android:id="@+id/rating_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="⭐ 8.0"
-        android:gravity="center"/>
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"/>
 
+    <TextView
+        android:id="@+id/release_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"/>
 </LinearLayout>

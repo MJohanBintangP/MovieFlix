@@ -1,24 +1,26 @@
 package com.telkomsby.movieflix.model;
 
 public class RegularUser extends User {
-    private String googleId;
 
-    public RegularUser(int userId, String email, String name, String profilePicture, String googleId) {
+    private boolean isSubscribed;
+    private String subscriptionExpiry;
+
+    public RegularUser(String userId, String email, String name, String profilePicture) {
         super(userId, email, name, profilePicture);
-        this.googleId = googleId;
+        this.isSubscribed = false;
+        this.subscriptionExpiry = "";
+    }
+
+    public boolean isSubscribed() {
+        return isSubscribed;
+    }
+
+    public String getSubscriptionExpiry() {
+        return subscriptionExpiry;
     }
 
     @Override
     public void displayProfile() {
-        System.out.println("Profile: " + name + ", Email: " + email);
-    }
-
-    public boolean loginWithGoogle(String googleToken) {
-        // Simulasi login dengan Google
-        if (googleToken != null && !googleToken.isEmpty()) {
-            login();
-            return true;
-        }
-        return false;
+        System.out.println("User Profile: " + name + " - " + email);
     }
 }

@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="24dp">
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
 
+    <!-- Foto Profil -->
+    <ImageView
+        android:id="@+id/iv_profile_photo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="Foto Profil Pengguna"
+        android:src="@drawable/ic_profile" />
+
+    <!-- Nama Pengguna -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_user_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profil Pengguna"
-        android:textSize="24sp"
+        android:text="Nama User"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Email Pengguna -->
+    <TextView
+        android:id="@+id/tv_user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="email@example.com"
+        android:textSize="16sp"
+        android:textColor="#555555"
+        android:gravity="center_horizontal"
         android:layout_marginBottom="32dp"/>
 
-        <!-- Tombol Logout -->
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/btn_logout"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
         android:text="Logout"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="#FF0000"
-        android:layout_marginTop="24dp"/>
+        app:strokeColor="#FF0000"
+        app:strokeWidth="2dp"
+        app:cornerRadius="8dp"
+        android:textColor="#FF0000"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"/>
 </LinearLayout>

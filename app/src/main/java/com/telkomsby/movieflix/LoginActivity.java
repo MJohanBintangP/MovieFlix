@@ -208,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void navigateToNextActivity(String userId, String role) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         DocumentReference userRef = db.collection("users").document(userId);
 
         userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -215,18 +216,20 @@ public class LoginActivity extends AppCompatActivity {
                 Boolean isSubscribed = documentSnapshot.getBoolean("isSubscribed");
                 Date expiryDate = documentSnapshot.getDate("subscriptionExpiry");
 
-                boolean hasActiveSubscription = isSubscribed != null && isSubscribed && expiryDate != null && !expiryDate.before(new Date());
+                boolean activeSubscription = isSubscribed != null && isSubscribed && expiryDate != null && !expiryDate.before(new Date());
 
                 if ("admin".equals(role)) {
                     startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-                } else if (hasActiveSubscription) {
+
+                } else if (activeSubscription) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                 } else {
                     startActivity(new Intent(LoginActivity.this, PaymentActivity.class));
                 }
+
                 finish();
             }
         });
     }
-
 }

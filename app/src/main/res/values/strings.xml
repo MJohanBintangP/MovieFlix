@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MovieFlix</string>
+
+    <string name="default_web_client_id">631010895366-3evdv80s4kdkv81r5ae9lqafmc6oo528.apps.googleusercontent.com</string>
+
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="failed_to_get_credentials">Gagal mendapatkan kredensial: %s</string>
+    <string name="credential_not_google_id">Kredensial bukan tipe Google ID!</string>
+    <string name="credential_not_custom">Kredensial bukan CustomCredential!</string>
+    <string name="authentication_failed">Autentikasi gagal.</string>
+    <string name="welcome_message">Selamat datang, %s!</string>
+    <string name="app_logo_desc">App Logo</string>
+    <string name="default_user_name">Pengguna</string>
+    <string name="login_failed">Login gagal, coba lagi.</string>
+    <string name="privacy_policy_text">Kebijakan Privasi</string>
+    <string name="terms_of_use_text">Ketentuan Penggunaan</string>
+    <string name="selamat_datang">Selamat Datang!</string>
+    <string name="logout">Logout</string>
+    <string name="user_not_found">Pengguna tidak ditemukan!</string>
+    <string name="google">Google</string>
+    <string name="mulai_sekarang">Mulai Sekarang</string>
+    <string name="next">Next</string>
+
+</resources>
